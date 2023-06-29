@@ -97,7 +97,11 @@ class Tarefas {
         }
 
         this.bakeCookieList = () => {
-            let cookie = [this.listName, '=', JSON.stringify(this.lista), '; SameSite=Lax; path=/;'].join('');
+            let expdate = new Date();
+            expdate.setYear(expdate.getFullYear() + 1);
+            let cookie = [this.listName, '=', JSON.stringify(this.lista),
+                          '; SameSite=Lax; path=/; expires=', expdate.toUTCString(), ';']
+                .join('');
             document.cookie = cookie;
         }
 
@@ -179,8 +183,12 @@ function toggleTheme(custom = '') {
         darkmode = false;
     }
 
-    let cookie = ['theme', '=', JSON.stringify(darkmode), '; SameSite=Lax; path=/;'].join('');
-    document.cookie = cookie
+    let expdate = new Date();
+    expdate.setYear(expdate.getFullYear() + 1);
+    let cookie = ['theme', '=', JSON.stringify(darkmode),
+                  '; SameSite=Lax; path=/; expires=', expdate.toUTCString(), ';']
+        .join('');
+    document.cookie = cookie;
 }
 
 function restoreTheme() {
